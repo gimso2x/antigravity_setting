@@ -15,8 +15,10 @@
 - **Post-Edit Validation:** ALWAYS suggest or use a linter to check for style and syntax errors immediately after modifying any code.
 
 ## 4. Frontend Architecture & Stack Defaults
-- **Default Tech Stack:** Unless otherwise specified, ALWAYS assume and use Next.js (App Router), SCSS (or TailwindCSS if requested), and TypeScript as the primary stack for frontend tasks.
+- **Default Tech Stack:** Unless otherwise specified, ALWAYS assume and use Next.js (App Router), SCSS, and TypeScript as the primary stack for frontend tasks. However, always follow the project's own configuration if it specifies a different styling solution (e.g., TailwindCSS, CSS Modules).
 - **Component Design Patterns:** UI components MUST target reusability, preferring Atomic Design or Headless UI patterns. Strictly separate business logic (Custom Hooks) from UI rendering (Presentational Components).
+- **Accessibility:** Follow WCAG 2.1 AA standards as a baseline. Use semantic HTML elements and ensure keyboard navigability for all interactive components.
+- **Performance:** Avoid unnecessary re-renders (React.memo, useMemo, useCallback where appropriate). Consider code splitting and lazy loading for optimal bundle size.
 - **Environment & Security:** NEVER hardcode sensitive information (API Keys, DB credentials, etc.) directly into the source code. ALWAYS utilize environment variables (e.g., `.env`) and recommend secure practices.
 
 ## 5. Problem Solving & Debugging
@@ -34,9 +36,11 @@
    - [예외-백엔드/DB/인프라] 사용자가 백엔드 등 서버 관련 작업을 명시적으로 지시할 경우, 백엔드 시니어 개발자 모드로 전환하여 무결성/보안/확장성을 최우선으로 설계함.
      * 샘플 명령어: "백엔드 작업을 할거야. 로그인 API를 설계해 줘", "DB 모델링 관점에서 이 테이블 구조를 리뷰해 줘" 등 '백엔드/서버/DB' 등의 키워드를 포함하여 지시.
 3. 코드스타일 및 검증: 코드나 파일을 수정하기 전에 반드시 사용자에게 변경 사항을 먼저 제안하고 승인(확인)을 받을 것. 전체 파일을 통째로 덮어쓰는 것을 지양하고, 변경된 부분만 Diff 형태로 출력하여 복붙하기 편하게 제공함. 코드 수정 후에는 항상 린터(Linter)를 활용해 스타일/문법 오류를 체크함.
-4. 문제 해결: 오류 발생 시 "연쇄적 사고(Chain of Thought)"를 통해 근본 원인을 먼저 파악하고 단계적 해결책을 계획함.
-5. 프론트엔드 아키텍처 및 기본 스택:
-   - 스택: 별도 언급 없으면 Next.js(App Router), SCSS, TypeScript 기본 사용.
+4. 프론트엔드 아키텍처 및 기본 스택:
+   - 스택: 별도 언급 없으면 Next.js(App Router), SCSS, TypeScript 기본 사용. 단, 프로젝트 자체 설정이 있으면 해당 설정을 우선 따름.
    - 설계: Atomic Design 또는 Headless UI 패턴 지향, UI와 비즈니스 로직(Hook) 완벽 분리.
+   - 접근성: WCAG 2.1 AA 기본 준수, 시맨틱 HTML 및 키보드 내비게이션 보장.
+   - 성능: 불필요한 리렌더링 방지, 코드 스플리팅 및 지연 로딩 고려.
    - 보안: API Key 등 민감 정보 하드코딩 절대 금지, 환경 변수(.env) 활용 필수.
+5. 문제 해결: 오류 발생 시 "연쇄적 사고(Chain of Thought)"를 통해 근본 원인을 먼저 파악하고 단계적 해결책을 계획함.
 -->

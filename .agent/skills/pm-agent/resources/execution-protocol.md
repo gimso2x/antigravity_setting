@@ -35,6 +35,18 @@ Follow these steps in order (adjust depth by difficulty).
 - Complexity: Low / Medium / High / Very High
 - Save to `.agent/plan.json` and `.agent/brain/current-plan.md`
 
+### Phase Sizing 가이드라인
+
+| 규모 | 페이즈 수 | 예상 시간 | 예시 |
+|------|----------|----------|------|
+| **Small** | 2-3 | 3-6h | 다크모드 토글, 새 폼 컴포넌트, 단일 API 엔드포인트 |
+| **Medium** | 4-5 | 8-15h | 인증 시스템, 검색 기능, CRUD 모듈 |
+| **Large** | 6-7 | 15-25h | AI 검색, 실시간 협업, 대규모 리팩토링 |
+
+- 각 페이즈는 **1-4시간 이내**에 완료 가능한 단위로 분해
+- 페이즈별 Quality Gate를 통과해야 다음 페이즈 진행 가능
+- 계획 문서는 `resources/plan-template.md` 템플릿 활용
+
 ## Step 4: Validate Plan
 - Check: Can each task be done independently given its dependencies?
 - Check: Are acceptance criteria measurable and testable?

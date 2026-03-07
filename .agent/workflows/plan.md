@@ -49,14 +49,38 @@ Break down the project into actionable tasks. Each task must have:
 
 ---
 
-## Step 5: Review Plan with User
+## Step 5: Risk Assessment & Rollback Strategy
 
-Present the full plan: task list, priority tiers, dependency graph, agent assignments.
-**You MUST get user confirmation before proceeding to Step 6.**
+// turbo
+각 페이즈에 대해 리스크를 식별하고 롤백 전략을 수립합니다.
+
+**리스크 식별 (4대 영역)**:
+- **기술 리스크**: API 변경, 성능 이슈, 데이터 마이그레이션
+- **의존성 리스크**: 외부 라이브러리 업데이트, 서드파티 서비스 가용성
+- **일정 리스크**: 복잡도 미지수, 차단 의존성
+- **품질 리스크**: 테스트 커버리지 갭, 회귀 가능성
+
+**평가 매트릭스**:
+
+| 리스크 | 확률 (Low/Mid/High) | 영향 (Low/Mid/High) | 완화 전략 |
+|--------|---------------------|---------------------|----------|
+| (식별된 리스크 기입) | | | |
+
+**롤백 전략**: 각 페이즈별로 실패 시 되돌리는 방법을 명시합니다.
+- 어떤 코드 변경을 되돌려야 하는지
+- DB 마이그레이션 롤백 필요 여부
+- 설정 복원 항목
 
 ---
 
-## Step 6: Save Plan
+## Step 6: Review Plan with User
+
+Present the full plan: task list, priority tiers, dependency graph, agent assignments, **risk assessment**.
+**You MUST get user confirmation before proceeding to Step 7.**
+
+---
+
+## Step 7: Save Plan
 
 // turbo
 Save the approved plan:
