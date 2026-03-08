@@ -8,6 +8,7 @@ description: Structured bug diagnosis and fixing workflow — reproduce, diagnos
 - **You MUST use local tools throughout the workflow.**
   - Use code analysis tools (grep, list_dir, local search) for bug investigation.
   - Read and write to files in the `.agent/tasks/` directory to record debugging results.
+  - Track your progress step-by-step in `.agent/tasks/progress-debug.md`.
   - Base path: `.agent/tasks`
 
 ---

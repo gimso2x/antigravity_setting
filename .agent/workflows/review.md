@@ -8,6 +8,7 @@ description: Full QA review pipeline — security audit (OWASP Top 10), performa
 - **You MUST use local tools throughout the workflow.**
   - Use code analysis tools (grep, list_dir, local search) for code analysis and review.
   - Read and write to files in the `.agent/tasks/` directory to record review results.
+  - Track your progress step-by-step in `.agent/tasks/progress-qa.md`.
   - Base path: `.agent/tasks`
 
 ---
@@ -80,4 +81,4 @@ Compile all findings into a prioritized report:
 - **LOW**: Backlog
 
 Each finding must include: `file:line`, description, and remediation code.
-Save the final report to `.agent/tasks/QA_Report.md`.
+Save the final report to `.agent/tasks/result-qa.md` (or `result-{agent}.md` format).

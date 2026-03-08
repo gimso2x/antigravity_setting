@@ -30,7 +30,9 @@ See `resources/examples.md` for input/output examples.
 Before submitting, run `resources/self-check.md`.
 
 ## Task Management
-Use the local tasks folder (`.agent/tasks/`) to track progress.
+- 작업 진행 시 항상 `../_shared/local-tasks.md`의 규칙을 따릅니다.
+- 시작 전 `.agent/tasks/plan.md` 또는 `task-board.md`를 확인하여 목표를 숙지하세요.
+- 진행 상황을 3~5단계마다 `.agent/tasks/progress-qa.md`에 기록하세요.
 
 ## References
 - Execution steps: `resources/execution-protocol.md`

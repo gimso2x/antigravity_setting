@@ -134,6 +134,11 @@ description: [한 줄 설명 — 언제 사용하는지 명시]
 - 기존 스킬의 작동하는 검사는 절대 제거하지 않음 (추가만 가능)
 - 새 스킬 이름은 반드시 사용자에게 확인 후 결정
 
+## Task Management
+- 작업 진행 시 항상 `../_shared/local-tasks.md`의 규칙을 따릅니다.
+- 시작 전 `.agent/tasks/plan.md` 또는 `task-board.md`를 확인하여 목표를 숙지하세요.
+- 진행 상황을 3~5단계마다 `.agent/tasks/progress-skill-developer.md`에 기록하세요.
+
 ## References
 - 스킬 라우팅: `../_shared/skill-routing.md`
 - 컨텍스트 로딩: `../_shared/context-loading.md`

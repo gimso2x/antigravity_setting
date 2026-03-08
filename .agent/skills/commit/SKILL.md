@@ -105,6 +105,10 @@ git add <specific-files>
 git commit -m "<message>"
 ```
 
+## Task Management
+- 작업 진행 시 항상 `../_shared/local-tasks.md`의 규칙을 따릅니다.
+- 진행 상황을 3~5단계마다 `.agent/tasks/progress-commit.md`에 기록하세요.
+
 ## References
 - Configuration: `config/commit-config.yaml`
 - Guide: `resources/conventional-commits.md`

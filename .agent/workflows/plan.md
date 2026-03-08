@@ -8,6 +8,7 @@ description: PM planning workflow — analyze requirements, select tech stack, d
 - **You MUST use local task files throughout the workflow.**
   - Use code analysis tools (grep, list_dir, local search) to analyze the existing codebase.
   - Read and write to files in the `.agent/tasks/` directory to record planning results.
+  - Track your progress step-by-step in `.agent/tasks/progress-pm.md`.
   - Base path: `.agent/tasks`
 ---
 
@@ -85,6 +86,6 @@ Present the full plan: task list, priority tiers, dependency graph, agent assign
 // turbo
 Save the approved plan:
 1. `.agent/tasks/plan.md`
-2. Write the plan summary into the task file directly.
+2. Update `.agent/plan.json` if necessary according to `pm-agent` rules.
 
-The plan is now ready for `/coordinate` or `/orchestrate` to execute.
+The plan is now ready for `frontend-agent`, `qa-agent`, etc. to execute by reading the task board.
