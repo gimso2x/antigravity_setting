@@ -1,0 +1,84 @@
+---
+description: QA/리뷰 워크플로 — OWASP 보안, 성능, 접근성, 코드 품질 감사
+---
+
+# Review (QA) 워크플로
+
+리뷰/보안/성능 감사/접근성 검토 요청 시 이 워크플로를 따릅니다.
+
+## 핵심 원칙
+
+1. **우선순위 순서**: Security > Performance > Accessibility > Code Quality
+2. **모든 발견**: file:line, 설명, 수정 코드 포함 필수
+3. **심각도 분류**: CRITICAL / HIGH / MEDIUM / LOW
+4. **자동 툴 먼저**: `npm audit`, `lighthouse` 등 실행 후 수동 검토
+5. **오탐 금지**: 모든 발견은 재현 가능해야 함
+6. **수정 코드 제공**: 설명만이 아닌 구체적 코드 제시
+
+## 심각도 정의
+
+| 심각도       | 기준                        | 대응         |
+| ------------ | --------------------------- | ------------ |
+| **CRITICAL** | 보안 침해, 데이터 손실 위험 | 즉시 수정    |
+| **HIGH**     | 출시 차단                   | 출시 전 수정 |
+| **MEDIUM**   | 이번 스프린트 수정          | 스프린트 내  |
+| **LOW**      | 백로그                      | 여유 시      |
+
+## 워크플로 (단계 생략 금지)
+
+### Step 1: 리뷰 범위 확정
+
+사용자에게 확인: 특정 파일, 기능 브랜치, 또는 전체 프로젝트
+
+### Step 2: 자동 보안 검사
+
+`npm audit` (Node.js), `bandit` (Python), 등 실행. 의존성 취약점 확인.
+
+### Step 3: 수동 보안 검토 (OWASP Top 10)
+
+- Injection (SQL, XSS, command)
+- Broken auth, 민감 데이터 노출
+- Broken access control, 보안 설정 오류
+- Insecure deserialization
+- 알려진 취약 컴포넌트
+- 불충분한 로깅
+
+### Step 4: 성능 분석
+
+- N+1 쿼리, 누락된 인덱스
+- 무한 페이지네이션, 메모리 누수
+- 불필요한 리렌더 (React)
+- 누락된 lazy loading
+- 큰 번들, 비최적화 이미지
+
+### Step 5: 접근성 검토 (WCAG 2.1 AA)
+
+- 시맨틱 HTML, ARIA 라벨
+- 키보드 내비게이션, 색상 대비
+- 포커스 관리, 스크린 리더 호환
+- 이미지 alt 텍스트
+
+### Step 6: 코드 품질 검토
+
+- 일관된 네이밍, 적절한 에러 핸들링
+- 테스트 커버리지, TypeScript strict 준수
+- 미사용 import/변수
+- async/await 올바른 사용
+- Public API 문서화
+
+### Step 7: 리포트 생성
+
+모든 발견을 심각도별 분류하여 제시.
+각 항목: `file:line`, 설명, 수정 코드.
+
+## 성능 병목 분석 템플릿
+
+```
+=== Performance Bottleneck ===
+Measurements:
+  - Total: {ms} / DB: {ms} ({N} queries) / Logic: {ms} / Render: {ms}
+Bottleneck: {가장 오래 걸리는 단계}
+Cause: {N+1 / heavy computation / large response / missing index}
+Solution: {구체적 수정}
+Expected: {X}ms → {Y}ms
+```

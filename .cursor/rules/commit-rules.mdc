@@ -1,0 +1,57 @@
+---
+description: Git 커밋 규칙 — Conventional Commits, 분할 기준, 안전 규칙
+---
+
+# Commit 규칙
+
+## Commit Types
+
+| Type     | Description      | Branch Prefix |
+| -------- | ---------------- | ------------- |
+| feat     | 새 기능          | feature/      |
+| fix      | 버그 수정        | fix/          |
+| refactor | 코드 개선        | refactor/     |
+| docs     | 문서 변경        | docs/         |
+| test     | 테스트 추가/수정 | test/         |
+| chore    | 빌드, 설정 등    | chore/        |
+| style    | 코드 스타일 변경 | style/        |
+| perf     | 성능 개선        | perf/         |
+
+## Commit Format
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+```
+
+- 72자 이내, 명령형 동사 (add, fix, update, remove...)
+- 소문자 시작, 마침표 없음
+
+## 워크플로
+
+1. **변경 분석**: `git status`, `git diff --staged`, `git log --oneline -5`
+2. **기능별 분할 판단**: 다른 scope/type이면 분할
+   - 분할 O: scope이 다른 경우, type이 다른 경우, 논리적으로 독립된 변경
+   - 분할 X: 단일 기능, 5개 이하 파일, 사용자가 단일 커밋 요청
+3. **Type 결정**: 파일 추가 → feat, 버그 수정 → fix, 리팩토링 → refactor
+4. **Scope 결정**: 변경된 모듈/컴포넌트명 (e.g., auth, api, ui)
+5. **사용자 확인**: 미리보기 제시, 승인 후 실행
+
+```
+📝 Commit preview:
+feat(auth): add login form with validation
+- Add LoginForm component with Zod validation
+- Add useAuth hook for authentication state
+Proceed? (Y/N/Edit)
+```
+
+6. **실행**: `git add <specific-files>` → `git commit -m "<message>"`
+
+## 안전 규칙 (절대 위반 금지)
+
+- ❌ 사용자 확인 없이 커밋 금지
+- ❌ `git add -A` 또는 `git add .` 사용 금지
+- ❌ 시크릿 포함 파일 커밋 금지 (.env, credentials 등)
+- ✅ 항상 특정 파일명으로 staging
+- ✅ 멀티라인 메시지는 HEREDOC 사용

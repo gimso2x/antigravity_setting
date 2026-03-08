@@ -1,0 +1,87 @@
+---
+description: 프론트엔드 전문 규칙 — FSD-lite, Radix UI, 컴포넌트, 성능, 접근성
+globs: ["**/*.tsx", "**/*.ts", "**/*.scss", "src/**"]
+---
+
+# 프론트엔드 스탠다드
+
+## 핵심 원칙
+
+1. **Component Reuse**: `radix-ui` 프리미티브 우선. `cva` 변형 또는 컴포지션으로 확장
+2. **Design Fidelity**: 디자인 토큰과 1:1 매핑. 불일치 시 구현 전 해결
+3. **Rendering**: 기본 Server Components. 상호작용·API 연동만 Client Components
+4. **Accessibility**: 시맨틱 HTML, ARIA, 키보드 내비게이션, 스크린 리더 호환 필수
+5. **Tool First**: 코딩 전에 기존 솔루션/도구 먼저 확인
+
+## 스택 & 라이브러리
+
+- **Stack**: Next.js App Router, TypeScript, SCSS(module.scss). 프로젝트에 Tailwind/CSS Modules 있으면 따름
+- **성능 목표**: FCP < 1s. `next/dynamic`(무거운 컴포넌트), `next/image`(미디어)
+- **Breakpoints**: 320, 768, 1024, 1440. 모바일 Drawer / 데스크톱 Dialog → `useResponsive`
+
+| Category       | Library                        |
+| -------------- | ------------------------------ |
+| Date           | `date-fns`                     |
+| Styling        | `module.scss`                  |
+| Hooks          | `ahooks` (기성 훅 우선)        |
+| Utils          | `es-toolkit` (첫 번째 선택)    |
+| State (Client) | `Zustand`                      |
+| Forms          | `@tanstack/react-form` + `zod` |
+
+## 아키텍처 (FSD-lite)
+
+- **Root (`src/`)**: 공유 로직 (components, lib, types). 공통 코드는 여기에
+- **Feature (`src/features/*/`)**: 기능별 로직. **기능 간 직접 참조 금지**. 단방향 흐름만
+
+```
+src/features/[feature]/
+├── components/           # Feature UI 컴포넌트
+│   └── skeleton/         # 로딩 스켈레톤
+├── types/                # Feature 전용 타입 정의
+└── utils/                # Feature 전용 유틸 (>90% 테스트 커버리지 필수)
+```
+
+> Feature 레벨에는 `lib/` 없음. `utils/` 사용. `lib/`는 루트 `src/lib/`만.
+
+## 컴포넌트 전략
+
+### Server vs Client
+
+- **Server**: 레이아웃, 마케팅 페이지, SEO 메타데이터
+- **Client**: 인터랙티브 기능, `useQuery` 훅
+
+### Radix UI 규칙
+
+- `Dialog`, `Popover`, `Tabs`, `Select` 등 프리미티브 우선
+- `components/ui/*`는 **읽기 전용** — 직접 수정 금지
+- 커스터마이징: 래퍼 생성 (e.g. `components/common/ProductButton.tsx`) 또는 `cva` 조합
+
+## 네이밍 & 임포트
+
+| Type                 | Convention                   |
+| -------------------- | ---------------------------- |
+| Files                | `kebab-case.tsx` (용도 표현) |
+| Components/Types     | `PascalCase`                 |
+| Functions/Vars/Hooks | `camelCase`                  |
+| Constants            | `SCREAMING_SNAKE_CASE`       |
+
+- Import 순서: Standard > 3rd Party > Local
+- 절대 경로 `@/` 필수 (상대 경로 `../../` 금지)
+- 타입은 `import type` 사용
+
+## 표준 준수
+
+- **Design Tokens**: `packages/design-tokens` (OKLCH). 색상 하드코딩 금지
+- **i18n**: `packages/i18n`. 문자열 하드코딩 금지
+- **Utils**: `es-toolkit` 먼저 확인. 커스텀 로직은 >90% 단위 테스트
+- **A11y**: WCAG 2.1 AA. 시맨틱 HTML, ARIA, 키보드, 포커스
+- **보안**: API 키/시크릿 소스 노출 금지. env 변수 사용
+
+## 리뷰 체크리스트
+
+- [ ] Interactive 요소 `aria-label` 및 시맨틱 headings
+- [ ] 모바일 뷰포트 기능 검증
+- [ ] CLS 없음, 빠른 로드
+- [ ] Error Boundary + Loading Skeleton 구현
+- [ ] 복잡한 로직 Vitest 커버
+- [ ] Typecheck + Lint 통과

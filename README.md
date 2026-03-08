@@ -7,12 +7,14 @@ AI 에이전트(Antigravity, Claude, Cursor 등)를 위한 공유 설정 레포.
 
 ## 📦 포함 내용
 
-| 항목 | 경로 | 설명 |
-|------|------|------|
-| **Skills** | `.agent/skills/` | frontend, debug, pm, qa, commit, skill-developer |
-| **Workflows** | `.agent/workflows/` | `/debug`, `/plan`, `/review` |
-| **Global Rules** | `GEMINI.md` | 언어, 페르소나, 코딩 스타일 등 공통 규칙 |
-| **Init Prompt** | `init.md` | 프로젝트 분석 → workspace GEMINI.md 생성 프롬프트 |
+| 항목              | 경로                     | 설명                                              |
+| ----------------- | ------------------------ | ------------------------------------------------- |
+| **Skills**        | `.agent/skills/`         | frontend, debug, pm, qa, commit, skill-developer  |
+| **Workflows**     | `.agent/workflows/`      | `/debug`, `/plan`, `/review`                      |
+| **Global Rules**  | `GEMINI.md`              | Antigravity 글로벌 규칙                           |
+| **Cursor Global** | `CURSOR_GLOBAL_RULES.md` | Cursor Settings → Rules 붙여넣기용                |
+| **Cursor Rules**  | `.cursor/rules/`         | Cursor 워크스페이스 규칙 (.mdc)                   |
+| **Init Prompt**   | `init.md`                | 프로젝트 분석 → workspace GEMINI.md 생성 프롬프트 |
 
 ---
 
@@ -24,14 +26,15 @@ AI 에이전트(Antigravity, Claude, Cursor 등)를 위한 공유 설정 레포.
 # 1) 이 레포를 아무 곳에 clone (최초 1회)
 git clone https://github.com/gimso2x/antigravity_setting.git
 
-# 2) 타겟 프로젝트로 이동한 뒤 스크립트 실행
-cd C:\your\project
-& C:\path\to\antigravity_setting\scripts\setup.ps1
-# 또는 -TargetPath로 지정
+# 2-A) Antigravity (기본)
 & C:\path\to\antigravity_setting\scripts\setup.ps1 -TargetPath "C:\your\project"
+
+# 2-B) Cursor IDE
+& C:\path\to\antigravity_setting\scripts\setup.ps1 -TargetPath "C:\your\project" -WorkspaceAgent cursor
 ```
 
 스크립트가 수행하는 작업:
+
 - ✅ `.agent/` → 타겟 프로젝트에 복사 (기존 있으면 덮어쓰기)
 - ✅ `GEMINI.md` → `~/.gemini/GEMINI.md` 글로벌 설정 (기존 백업)
 
@@ -47,9 +50,9 @@ cd C:\your\project
 
 ```
 .
-├── .agent/
+├── .agent/                       # Antigravity 전용
 │   ├── skills/
-│   │   ├── _shared/              # 공유 리소스 (라우팅, 컨텍스트 로딩 등)
+│   │   ├── _shared/              # 공유 리소스
 │   │   ├── commit/               # Git 커밋 스킬
 │   │   ├── debug-agent/          # 버그 진단/수정 스킬
 │   │   ├── frontend-agent/       # React/Next.js UI 구현 스킬
@@ -60,9 +63,18 @@ cd C:\your\project
 │       ├── debug.md              # /debug 워크플로우
 │       ├── plan.md               # /plan 워크플로우
 │       └── review.md             # /review 워크플로우
+├── .cursor/                      # Cursor IDE 전용
+│   └── rules/
+│       ├── coding-standards.mdc  # 코딩 기본 규칙
+│       ├── frontend-standards.mdc# 프론트엔드 전문 규칙
+│       ├── debug-workflow.mdc    # 버그 진단/수정
+│       ├── plan-workflow.mdc     # 기획/태스크 분해
+│       ├── review-workflow.mdc   # QA/리뷰
+│       └── commit-rules.mdc     # Git 커밋 규칙
 ├── scripts/
 │   └── setup.ps1                 # 초기화 스크립트
-├── GEMINI.md                     # 글로벌 AI 규칙
+├── GEMINI.md                     # Antigravity 글로벌 규칙
+├── CURSOR_GLOBAL_RULES.md        # Cursor 글로벌 규칙
 ├── init.md                       # Workspace GEMINI.md 생성 프롬프트
 └── README.md                     # 이 파일
 ```
