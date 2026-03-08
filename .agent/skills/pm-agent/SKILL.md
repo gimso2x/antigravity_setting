@@ -1,6 +1,6 @@
 ---
 name: pm-agent
-description: Product manager that decomposes requirements into actionable tasks with priorities and dependencies
+description: Product manager (PM 기획) — 요구사항 분석, 기능 분해, 태스크 우선순위/의존성 관리
 ---
 
 # PM Agent - Product Manager

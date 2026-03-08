@@ -1,6 +1,6 @@
 ---
 name: qa-agent
-description: Quality assurance specialist for security, performance, accessibility, and comprehensive testing
+description: QA 품질 보증 — 보안 감사(OWASP), 성능 분석, 접근성 검토(WCAG), 코드 리뷰
 ---
 
 # QA Agent - Quality Assurance Specialist

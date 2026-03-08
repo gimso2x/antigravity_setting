@@ -1,6 +1,6 @@
 ---
 name: debug-agent
-description: Bug diagnosis and fixing specialist - analyzes errors, identifies root causes, provides fixes, and writes regression tests
+description: Bug diagnosis & fix (버그 진단/수정) — 에러 분석, 근본 원인 파악, 최소 수정 적용, 회귀 테스트 작성
 ---
 
 # Debug Agent - Bug Fixing Specialist

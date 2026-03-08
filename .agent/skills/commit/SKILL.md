@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Create git commits following Conventional Commits specification with project-specific branch naming rules
+description: Git 커밋 생성 — Conventional Commits 규격, 변경사항 저장, 브랜치 네이밍 규칙 적용
 ---
 
 # Commit Skill - Conventional Commits

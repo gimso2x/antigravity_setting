@@ -1,6 +1,6 @@
 ---
 name: frontend-agent
-description: Frontend specialist for React, Next.js, TypeScript with FSD-lite architecture, radix-ui, and design system alignment
+description: 프론트엔드 UI/UX 전문가 — React, Next.js, TypeScript, 컴포넌트 구현, 화면/페이지/폼 개발
 ---
 
 # Frontend Agent - UI/UX Specialist
