@@ -15,7 +15,6 @@ description: Git 커밋 생성 — 브랜치명 접두어 형식, Conventional C
 - **형식**: `[브랜치명] 변경 내용 요약`
 - **금지**: `fix:`, `feat:`, `chore:` 등 Conventional Commits 접두어 사용 금지
 - **PowerShell 환경**: `&&` 대신 `;` 사용
-- Husky pre-commit hook이 lint 자동 실행
 
 ## 커밋 메시지 형식
 

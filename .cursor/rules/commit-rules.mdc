@@ -62,4 +62,3 @@ description: Git 커밋 규칙 — 브랜치명 접두어 형식, Conventional C
 - ❌ `git add -A` 또는 `git add .` 사용 금지
 - ❌ `.env`, `.env.local` 등 환경변수 파일 커밋 금지
 - ✅ 항상 특정 파일명으로 명시적 스테이징
-- ✅ Husky pre-commit hook 실패 시 lint 오류 수정 후 재시도
