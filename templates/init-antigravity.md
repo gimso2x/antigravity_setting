@@ -1,6 +1,6 @@
 # Workspace GEMINI.md 초기화 가이드
 
-> 이 문서를 LLM 에이전트(Antigravity, Claude, Cursor 등)에 붙여넣으면,
+> 이 문서를 LLM 에이전트(Antigravity, Claude 등)에 붙여넣으면,
 > 에이전트가 현재 프로젝트를 분석하고 workspace용 `GEMINI.md`를 자동 생성합니다.
 
 ---

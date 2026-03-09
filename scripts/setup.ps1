@@ -124,18 +124,9 @@ function Deploy-Antigravity {
     $fileCount = (Get-ChildItem -Recurse -File $script:DestAgent).Count
     Write-OK ".agent/ 복사 완료 ($fileCount 파일)"
 
-    Write-Step "${StepPrefix}2" "init.md 복사 (Antigravity/Gemini용)..."
-    $SourceInit = Join-Path $ScriptDir "init.md"
-    $script:DestInit = Join-Path $TargetPath "init.md"
-    if (Test-Path $SourceInit) {
-        Copy-Item -Force $SourceInit $script:DestInit
-        Write-OK "init.md 복사 완료 → LLM에 붙여넣어 workspace GEMINI.md를 생성하세요."
-    }
-    else {
-        Write-Warn "init.md가 없습니다. 건너뜁니다."
-    }
 
-    Write-Step "${StepPrefix}3" "Global GEMINI.md 설정..."
+
+    Write-Step "${StepPrefix}2" "Global GEMINI.md 설정..."
     $SourceGemini = Join-Path $ScriptDir "GEMINI.md"
     if (-not (Test-Path $SourceGemini)) {
         Write-Err "소스 GEMINI.md가 없습니다: $SourceGemini"
@@ -170,16 +161,7 @@ function Deploy-Cursor {
     $rulesCount = (Get-ChildItem -Path $CursorRulesDest -File).Count
     Write-OK ".cursor/rules/ 복사 완료 ($rulesCount 파일)"
 
-    Write-Step "${StepPrefix}2" "cursor-init.md 복사 (프로젝트 컨텍스트 생성용)..."
-    $SourceCursorInit = Join-Path $ScriptDir "cursor-init.md"
-    $script:DestCursorInit = Join-Path $TargetPath "cursor-init.md"
-    if (Test-Path $SourceCursorInit) {
-        Copy-Item -Force $SourceCursorInit $script:DestCursorInit
-        Write-OK "cursor-init.md 복사 완료 → Cursor 채팅에 붙여넣어 project-context.mdc를 생성하세요."
-    }
-    else {
-        Write-Warn "cursor-init.md가 없습니다. 건너뜁니다."
-    }
+
 }
 
 # ══════════════════════════════════════════
@@ -203,6 +185,21 @@ switch ($WorkspaceAgent) {
     }
 }
 
+# ── 통합 init.md 복사 (선택에 따라 적절한 템플릿 사용) ──
+$TemplateDir = Join-Path $ScriptDir "templates"
+$InitTemplateName = "init-$WorkspaceAgent.md"
+$SourceInitTemplate = Join-Path $TemplateDir $InitTemplateName
+$script:DestInit = Join-Path $TargetPath "init.md"
+
+Write-Step "★" "init.md 복사 ($agentLabel 템플릿)..."
+if (Test-Path $SourceInitTemplate) {
+    Copy-Item -Force $SourceInitTemplate $script:DestInit
+    Write-OK "init.md 복사 완료 → LLM에 붙여넣으면 프로젝트 설정이 자동 생성됩니다."
+}
+else {
+    Write-Err "init 템플릿이 없습니다: $SourceInitTemplate"
+}
+
 # ── 완료 ──
 Write-Host ""
 Write-Host "╔══════════════════════════════════════════╗" -ForegroundColor Green
@@ -213,21 +210,16 @@ Write-Host ""
 if ($WorkspaceAgent -eq "antigravity" -or $WorkspaceAgent -eq "both") {
     Write-Host "📁 .agent/       → $($script:DestAgent)" -ForegroundColor White
     Write-Host "📄 GEMINI.md     → $GeminiGlobalPath (글로벌)" -ForegroundColor White
-    Write-Host "📝 init.md       → $($script:DestInit)" -ForegroundColor White
 }
 if ($WorkspaceAgent -eq "cursor" -or $WorkspaceAgent -eq "both") {
     Write-Host "📂 .cursor/rules/ → $CursorRulesDest" -ForegroundColor White
-    Write-Host "� cursor-init.md → $($script:DestCursorInit)" -ForegroundColor White
 }
+Write-Host "📝 init.md       → $($script:DestInit)" -ForegroundColor White
 
 Write-Host ""
-if ($WorkspaceAgent -eq "antigravity" -or $WorkspaceAgent -eq "both") {
-    Write-Host "💡 [Antigravity] init.md를 열어 LLM 에이전트에게 붙여넣으면" -ForegroundColor Yellow
-    Write-Host "   이 프로젝트에 맞는 workspace GEMINI.md를 생성하세요." -ForegroundColor Yellow
-}
+Write-Host "💡 다음 단계:" -ForegroundColor Yellow
 if ($WorkspaceAgent -eq "cursor" -or $WorkspaceAgent -eq "both") {
-    Write-Host "💡 [Cursor] 다음 단계:" -ForegroundColor Yellow
     Write-Host "   1. CURSOR_GLOBAL_RULES.md를 Cursor Settings → Rules에 붙여넣으세요." -ForegroundColor Yellow
-    Write-Host "   2. cursor-init.md를 Cursor 채팅에 붙여넣어 project-context.mdc를 생성하세요." -ForegroundColor Yellow
 }
+Write-Host "   → init.md를 열어 LLM 에이전트에게 붙여넣으면 프로젝트 설정이 자동 생성됩니다." -ForegroundColor Yellow
 Write-Host ""
