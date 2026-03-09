@@ -1,57 +1,65 @@
 ---
-description: Git 커밋 규칙 — Conventional Commits, 분할 기준, 안전 규칙
+description: Git 커밋 규칙 — 브랜치명 접두어 형식, Conventional Commits 금지, PowerShell 호환
 ---
 
 # Commit 규칙
 
-## Commit Types
-
-| Type     | Description      | Branch Prefix |
-| -------- | ---------------- | ------------- |
-| feat     | 새 기능          | feature/      |
-| fix      | 버그 수정        | fix/          |
-| refactor | 코드 개선        | refactor/     |
-| docs     | 문서 변경        | docs/         |
-| test     | 테스트 추가/수정 | test/         |
-| chore    | 빌드, 설정 등    | chore/        |
-| style    | 코드 스타일 변경 | style/        |
-| perf     | 성능 개선        | perf/         |
-
-## Commit Format
+## 커밋 메시지 형식
 
 ```
-<type>(<scope>): <description>
-
-[optional body]
+[브랜치명] 변경 내용 요약
 ```
 
-- 72자 이내, 명령형 동사 (add, fix, update, remove...)
-- 소문자 시작, 마침표 없음
+- **금지**: `fix:`, `feat:`, `chore:` 등 Conventional Commits 접두어 사용 금지
+- **PowerShell**: `&&` 대신 `;` 사용
+- 제목 + 본문을 `-m` 플래그 **두 번**으로 분리
 
 ## 워크플로
 
-1. **변경 분석**: `git status`, `git diff --staged`, `git log --oneline -5`
-2. **기능별 분할 판단**: 다른 scope/type이면 분할
-   - 분할 O: scope이 다른 경우, type이 다른 경우, 논리적으로 독립된 변경
-   - 분할 X: 단일 기능, 5개 이하 파일, 사용자가 단일 커밋 요청
-3. **Type 결정**: 파일 추가 → feat, 버그 수정 → fix, 리팩토링 → refactor
-4. **Scope 결정**: 변경된 모듈/컴포넌트명 (e.g., auth, api, ui)
-5. **사용자 확인**: 미리보기 제시, 승인 후 실행
+1. **브랜치 및 변경 파일 확인**
 
-```
-📝 Commit preview:
-feat(auth): add login form with validation
-- Add LoginForm component with Zod validation
-- Add useAuth hook for authentication state
-Proceed? (Y/N/Edit)
-```
+   ```powershell
+   git branch --show-current
+   git status
+   git diff --name-only
+   ```
 
-6. **실행**: `git add <specific-files>` → `git commit -m "<message>"`
+2. **파일 스테이징**: `git add .` / `git add -A` **사용 금지**, 반드시 파일명 명시
+   - 경로에 `()`가 포함된 경우 따옴표로 감쌀 것
+
+   ```powershell
+   # ❌ 틀림
+   git add src/app/(main)/page.tsx
+   # ✅ 올바름
+   git add "src/app/(main)/page.tsx"
+   ```
+
+3. **사용자 확인**: 아래 형식으로 미리보기 제시 후 승인 받기
+
+   ```
+   📝 커밋 메시지 미리보기:
+
+   [feature/202602-공통] 로그인 폼 유효성 검사 추가
+
+   - LoginForm: Zod 유효성 검사 적용
+   - useAuth: 인증 상태 훅 추가
+
+   스테이징된 파일:
+   - src/components/LoginForm.tsx
+
+   진행할까요? (Y/N)
+   ```
+
+4. **커밋 실행** (`-m` 플래그 두 번 사용)
+   ```powershell
+   git add <파일경로>; git commit -m "[브랜치명] 변경 내용 요약" -m "- 파일1: 변경 상세`n- 파일2: 변경 상세"
+   ```
+   > PowerShell 줄바꿈: 본문 내 줄바꿈은 `` `n `` 사용
 
 ## 안전 규칙 (절대 위반 금지)
 
 - ❌ 사용자 확인 없이 커밋 금지
 - ❌ `git add -A` 또는 `git add .` 사용 금지
-- ❌ 시크릿 포함 파일 커밋 금지 (.env, credentials 등)
-- ✅ 항상 특정 파일명으로 staging
-- ✅ 멀티라인 메시지는 HEREDOC 사용
+- ❌ `.env`, `.env.local` 등 환경변수 파일 커밋 금지
+- ✅ 항상 특정 파일명으로 명시적 스테이징
+- ✅ Husky pre-commit hook 실패 시 lint 오류 수정 후 재시도
