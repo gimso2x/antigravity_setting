@@ -96,10 +96,19 @@ description: 이 프로젝트의 기술 스택 및 컨벤션
 (GEMINI.md와 동일하게 채워 넣어)
 ---
 
+## 파일 3: .agent/skills/*/SKILL.md & .cursor/rules/*.mdc (스킬 맞춤형 자동 생성)
+
+기존 프로젝트 분석 결과를 바탕으로, `.agent/skills/` 하위의 모든 `SKILL.template.md` 파일들을 읽어들여라.
+그 후 현재 프로젝트 환경과 스택에 맞추어 내용(예: `{{FRAMEWORK}}` 변수, 예시 파일 경로 등)을 수정한 뒤, 다음 두 가지 행동을 모두 수행해줘:
+1. 템플릿과 동일한 `.agent/skills/*/` 하위 위치에 `SKILL.md` 이름으로 저장한다. (Antigravity 용도)
+2. 해당 내용을 **Cursor 규칙 형식(.mdc)**으로 변환하여 `.cursor/rules/` 디렉토리 안에 각각 저장한다. (예: `.cursor/rules/skill-frontend-agent.mdc`)
+
+---
+
 ## 공통 규칙
 - 파일이 이미 존재하면 기존 내용을 보존하면서 병합해줘.
 - 불확실한 부분은 주석으로 표시하고, 확인이 필요하다고 알려줘.
-- 두 파일 모두 생성이 완료되면, 이 init.md 파일을 삭제해줘.
+- 모든 작업이 완료되면, 이 init.md 파일을 삭제해줘.
 ```
 
 ---

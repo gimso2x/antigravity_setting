@@ -61,7 +61,7 @@ git add <파일경로1> <파일경로2>
 ```
 📝 커밋 메시지 미리보기:
 
-[feature/202602-공통] Dockerfile 빌드 단계 네트워크 진단 RUN 명령 추가
+[{{PROJECT_FEATURE_PREFIX}}] Dockerfile 빌드 단계 네트워크 진단 RUN 명령 추가
 
 - Dockerfile-development: 빌드 단계에 curl/nslookup 네트워크 진단 RUN 명령 추가
 - 내부 API 접근 가능 여부 확인 목적
@@ -83,7 +83,7 @@ git add <파일경로>; git commit -m "[브랜치명] 변경 내용 요약" -m "
 예시:
 
 ```powershell
-git add docker/Dockerfile-development; git commit -m "[feature/202602-공통] Dockerfile 빌드 단계 네트워크 진단 RUN 명령 추가" -m "- Dockerfile-development: 빌드 단계에 curl/nslookup으로 네트워크 진단 RUN 명령 추가`n- 내부 API 접근 가능 여부 확인 목적"
+git add docker/Dockerfile-development; git commit -m "[{{PROJECT_FEATURE_PREFIX}}] Dockerfile 빌드 단계 네트워크 진단 RUN 명령 추가" -m "- Dockerfile-development: 빌드 단계에 curl/nslookup으로 네트워크 진단 RUN 명령 추가`n- 내부 API 접근 가능 여부 확인 목적"
 ```
 
 > **PowerShell 줄바꿈**: 본문 내 줄바꿈은 `` `n `` 사용
