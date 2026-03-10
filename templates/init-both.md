@@ -96,19 +96,21 @@ description: 이 프로젝트의 기술 스택 및 컨벤션
 (GEMINI.md와 동일하게 채워 넣어)
 ---
 
-## 파일 3: .agent/skills/*/SKILL.md & .cursor/rules/*.mdc (스킬 맞춤형 자동 생성)
+## 파일 3: .agent/skills/*/SKILL.md & .cursor/rules/*.mdc (스킬 파일 생성 및 템플릿 삭제)
 
-기존 프로젝트 분석 결과를 바탕으로, `.agent/skills/` 하위의 모든 `SKILL.template.md` 파일들을 읽어들여라.
-그 후 현재 프로젝트 환경과 스택에 맞추어 내용(예: `{{FRAMEWORK}}` 변수, 예시 파일 경로 등)을 수정한 뒤, 다음 두 가지 행동을 모두 수행해줘:
+기술 스택과 컨벤션은 파일 1과 파일 2에 정의했으므로 스킬 파일에 중복해서 넣지 마.
+대신, `.agent/skills/` 하위의 모든 `SKILL.template.md` 파일들을 그대로 읽어들여 다음 두 가지 행동을 수행해줘:
 1. 템플릿과 동일한 `.agent/skills/*/` 하위 위치에 `SKILL.md` 이름으로 저장한다. (Antigravity 용도)
 2. 해당 내용을 **Cursor 규칙 형식(.mdc)**으로 변환하여 `.cursor/rules/` 디렉토리 안에 각각 저장한다. (예: `.cursor/rules/skill-frontend-agent.mdc`)
+
+생성이 모두 완료되면, 더 이상 필요 없는 `.agent/skills/` 하위의 모든 `SKILL.template.md` 파일들과, 방금 복사해 와서 붙여넣기를 완료한 `CURSOR_GLOBAL_RULES.md` 파일도 모두 삭제해줘.
 
 ---
 
 ## 공통 규칙
 - 파일이 이미 존재하면 기존 내용을 보존하면서 병합해줘.
 - 불확실한 부분은 주석으로 표시하고, 확인이 필요하다고 알려줘.
-- 모든 작업이 완료되면, 이 init.md 파일을 삭제해줘.
+- 모든 작업이 완료되면, 이 init.md 파일도 삭제해줘.
 ```
 
 ---

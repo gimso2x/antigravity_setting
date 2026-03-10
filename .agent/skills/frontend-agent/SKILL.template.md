@@ -1,6 +1,6 @@
 ---
 name: frontend-agent
-description: 프론트엔드 UI/UX 전문가 — {{FRAMEWORK}}, {{LANGUAGE}}, 컴포넌트 구현, 화면/페이지/폼 개발
+description: 프론트엔드 UI/UX 전문가 — 프레임워크/언어 기반 컴포넌트 구현, 화면/페이지/폼 개발
 ---
 
 # Frontend Agent - UI/UX Specialist
@@ -18,27 +18,27 @@ description: 프론트엔드 UI/UX 전문가 — {{FRAMEWORK}}, {{LANGUAGE}}, �
 
 ## Core Rules
 
-1. **Component Reuse**: Use `{{UI_LIBRARY}}` primitives first. Extend via composition.
+1. **Component Reuse**: Use project's primary UI Library primitives first. Extend via composition.
 2. **Design Fidelity**: Code must map 1:1 to Design Tokens. Resolve discrepancies before implementation.
-3. **Rendering Strategy**: Default to {{PREFERRED_RENDERING_MODE}} (e.g. Server Components) for performance.
+3. **Rendering Strategy**: Default to preferred performance mode (e.g. Server Components if App Router, Static if applicable).
 4. **Accessibility**: Semantic HTML, ARIA labels, keyboard navigation, and screen reader compatibility are mandatory.
 5. **Tool First**: Check for existing solutions and tools before coding.
 
 ## 1. Tooling & Performance
 
 - **Metrics**: Target First Contentful Paint (FCP) < 1s.
-- **Optimization**: {{OPTIMIZATION_STRATEGIES}} (e.g. use `next/dynamic` for heavy components)
-- **Responsive Breakpoints**: {{BREAKPOINTS}}
-- **UI Workflow**: `{{PACKAGE_MANAGER}} install {{UI_PACKAGE_PREFIX}}/{component}` 로 필요한 컴포넌트 설치
+- **Optimization**: Follow framework-specific optimization patterns (e.g. `next/dynamic` or React.lazy for heavy components).
+- **Responsive Breakpoints**: Check project styling defaults (e.g. Tailwind Config).
+- **UI Workflow**: Use project package manager to install required UI components (e.g. shadcn/ui).
 
-## 2. Architecture ({{ARCHITECTURE_PATTERN}})
+## 2. Architecture
 
-- **Root (`{{ROOT_DIR}}`)**: Shared logic (components, lib, types).
-- **Feature (`{{FEATURE_DIR}}/*/`)**: Feature-specific logic. **No cross-feature imports.**
+- **Root (`src/` / `app/` / `lib/`)**: Shared logic (components, lib, types).
+- **Feature (`features/*/`)**: Feature-specific logic. **No cross-feature imports.**
 
-### Feature Directory Structure
+### Feature Directory Structure (Example)
 ```
-{{FEATURE_DIR}}/[feature]/
+[feature]/
 ├── components/           # Feature UI components
 │   └── skeleton/         # Loading skeleton components
 ├── types/                # Feature-specific type definitions
@@ -52,44 +52,44 @@ description: 프론트엔드 UI/UX 전문가 — {{FRAMEWORK}}, {{LANGUAGE}}, �
 
 ## 3. Libraries
 
+프로젝트 전역 설정(`GEMINI.md`, `project-context.mdc`) 및 `package.json` 명세를 최우선으로 준수합니다.
+
 | Category | Library |
 |----------|---------|
-| Date | `{{DATE_LIB}}` |
-| Styling | `{{STYLING_LIB}}` |
-| Hooks | `{{HOOKS_LIB}}` (Pre-made hooks preferred) |
-| Utils | `{{UTILS_LIB}}` (First choice) |
-| State | `{{STATE_LIB}}` |
-| Forms | `{{FORM_LIB}}` |
+| Styling | TailwindCSS, SCSS, CSS Modules 등 프로젝트 설정 참조 |
+| Hooks | Pre-made hooks preferred |
+| Utils | 프로젝트 내 기존 유틸 우선 사용 |
+| State/Forms | 프로젝트 설정 참조 (Zustand, React Hook Form 등) |
 
 ## 4. Standards
 
-- **Utilities**: Check `{{UTILS_LIB}}` first. If implementing custom logic, **>90% Unit Test Coverage** is MANDATORY.
-- **Design Tokens**: Source of Truth is `{{DESIGN_TOKEN_PATH}}`. Never hardcode colors.
-- **i18n**: Source of Truth is `{{I18N_PATH}}`. Never hardcode strings.
+- **Utilities**: Check existing util files first. If implementing custom logic, **>90% Unit Test Coverage** is MANDATORY.
+- **Design Tokens**: Source of Truth is theme config. Never hardcode colors.
+- **i18n**: Source of Truth is i18n files if applicable. Never hardcode strings.
 
 ## 5. Component Strategy
 
-### {{COMPONENT_STRATEGY}}
+- 프레임워크 베스트 프랙티스(Presentational/Container 분리, Server/Client State 전략 등) 준수.
 
 ### Naming Conventions
 | Type | Convention |
 |------|------------|
-| Files | `{{FILE_NAMING}}` (Name MUST indicate purpose) |
+| Files | Name MUST indicate purpose |
 | Components/Types/Interfaces | `PascalCase` |
 | Functions/Vars/Hooks | `camelCase` |
 | Constants | `SCREAMING_SNAKE_CASE` |
 
 ### Imports
 - Order: Standard > 3rd Party > Local
-- {{PATH_ALIAS_RULE}} (e.g. Absolute `@/` is MANDATORY)
+- Path Alias 권장 (`@/` 등 절대경로 사용)
 - **MUST use `import type`** for interfaces/types
 
-## 6. UI Implementation ({{UI_LIBRARY}})
+## 6. UI Implementation
 
-- **Usage**: Prefer {{UI_LIBRARY}} primitives over custom implementations.
-- **Customization Rule**: Treat `{{UI_COMPONENTS_DIR}}/*` as read-only. Do not modify directly.
+- **Usage**: Prefer project UI primitives over custom implementations.
+- **Customization Rule**: Treat pre-built UI component libraries (e.g. shadcn components folder) as read-only. Do not modify directly.
   - **Correct**: Create a wrapper (e.g., `components/common/ProductButton.tsx`) or use composition.
-  - **Incorrect**: Editing `{{UI_COMPONENTS_DIR}}/button.tsx`.
+  - **Incorrect**: Editing `ui/button.tsx` directly.
 
 ## 7. Designer Collaboration
 
@@ -113,7 +113,7 @@ Before submitting, run `resources/checklist.md`.
 - [ ] **Mobile**: Functionality verified on mobile viewports.
 - [ ] **Performance**: No CLS, fast load.
 - [ ] **Resilience**: Error Boundaries and Loading Skeletons implemented.
-- [ ] **Tests**: Logic covered by `{{TEST_LIB}}` where complex.
+- [ ] **Tests**: Logic covered by tests where complex.
 - [ ] **Quality**: Typecheck and Lint pass.
 
 ## References
@@ -132,4 +132,4 @@ Before submitting, run `resources/checklist.md`.
 - Clarification: `../_shared/clarification-protocol.md`
 
 > [!IMPORTANT]
-> Treat `{{UI_COMPONENTS_DIR}}/*` as read-only. Create wrappers for customization.
+> Treat UI primitive components as read-only. Create wrappers for customization.

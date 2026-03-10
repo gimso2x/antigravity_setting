@@ -161,6 +161,16 @@ function Deploy-Cursor {
     $rulesCount = (Get-ChildItem -Path $CursorRulesDest -File).Count
     Write-OK ".cursor/rules/ 복사 완료 ($rulesCount 파일)"
 
+    Write-Step "${StepPrefix}2" "CURSOR_GLOBAL_RULES.md 복사..."
+    $SourceGlobalRules = Join-Path $ScriptDir "CURSOR_GLOBAL_RULES.md"
+    if (Test-Path $SourceGlobalRules) {
+        $DestGlobalRules = Join-Path $TargetPath "CURSOR_GLOBAL_RULES.md"
+        Copy-Item -Force $SourceGlobalRules $DestGlobalRules
+        Write-OK "CURSOR_GLOBAL_RULES.md 복사 완료: $DestGlobalRules"
+    } else {
+        Write-Warn "소스 CURSOR_GLOBAL_RULES.md가 없습니다: $SourceGlobalRules"
+    }
+
 
 }
 
@@ -213,13 +223,15 @@ if ($WorkspaceAgent -eq "antigravity" -or $WorkspaceAgent -eq "both") {
 }
 if ($WorkspaceAgent -eq "cursor" -or $WorkspaceAgent -eq "both") {
     Write-Host "📂 .cursor/rules/ → $CursorRulesDest" -ForegroundColor White
+    $DestGlobalRules = Join-Path $TargetPath "CURSOR_GLOBAL_RULES.md"
+    Write-Host "📄 CURSOR_GLOBAL_RULES.md → $DestGlobalRules" -ForegroundColor White
 }
 Write-Host "📝 init.md       → $($script:DestInit)" -ForegroundColor White
 
 Write-Host ""
 Write-Host "💡 다음 단계:" -ForegroundColor Yellow
 if ($WorkspaceAgent -eq "cursor" -or $WorkspaceAgent -eq "both") {
-    Write-Host "   1. CURSOR_GLOBAL_RULES.md를 Cursor Settings → Rules에 붙여넣으세요." -ForegroundColor Yellow
+    Write-Host "   1. 프로젝트 루트에 복사된 CURSOR_GLOBAL_RULES.md 내용을 Cursor Settings → Rules에 붙여넣으세요." -ForegroundColor Yellow
 }
-Write-Host "   → init.md를 열어 LLM 에이전트에게 붙여넣으면 프로젝트 설정이 자동 생성됩니다." -ForegroundColor Yellow
+Write-Host "   → init.md를 열어 LLM 에이전트에게 붙여넣으면 프로젝트(Workspace) 설정이 자동 생성됩니다." -ForegroundColor Yellow
 Write-Host ""
