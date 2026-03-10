@@ -5,7 +5,7 @@ Complete **each step before moving to the next** to avoid losing direction.
 
 ---
 
-## 1. Debugging Reasoning (Debug Agent, Backend/Frontend/Mobile Agent)
+## 1. Debugging Reasoning (Debug Agent)
 
 Repeat the loop below when finding the cause of a bug. After 3 iterations without resolution, record `Status: blocked`.
 
@@ -22,6 +22,12 @@ If correct → Move to fix step
 If incorrect → Write new hypothesis #{N+1}
 ```
 
+**After 3 Failed Fixes:**
+- STOP
+- Question the architecture
+- Each fix reveals new problem in different place → architectural issue
+- Discuss with user before attempting more fixes
+
 **Example:**
 ```
 === Hypothesis #1 ===
@@ -34,7 +40,7 @@ Verdict: Correct → Set default value of todos to []
 
 ---
 
-## 2. Architecture Decision (PM Agent, Backend Agent)
+## 2. Architecture Decision (PM Agent)
 
 Fill in this matrix when technology selection or design decisions are needed.
 
@@ -42,18 +48,18 @@ Fill in this matrix when technology selection or design decisions are needed.
 === Decision: {what needs to be chosen} ===
 
 Options:
-  A: {option A}
-  B: {option B}
-  C: {option C} (if applicable)
+A: {option A}
+B: {option B}
+C: {option C} (if applicable)
 
 Evaluation criteria and scores (1-5):
-| Criterion           | A | B | C | Weight |
+| Criterion | A | B | C | Weight |
 |---------------------|---|---|---|--------|
-| Performance         |   |   |   | {H/M/L} |
-| Implementation complexity |   |   |   | {H/M/L} |
-| Team familiarity    |   |   |   | {H/M/L} |
-| Scalability         |   |   |   | {H/M/L} |
-| Existing code consistency |   |   |   | {H/M/L} |
+| Performance | | | | {H/M/L} |
+| Implementation complexity | | | | {H/M/L} |
+| Team familiarity | | | | {H/M/L} |
+| Scalability | | | | {H/M/L} |
+| Existing code consistency | | | | {H/M/L} |
 
 Conclusion: {selected option}
 Reason: {1-2 line rationale}
@@ -65,16 +71,16 @@ Trade-off: {why giving up advantages of unchosen options}
 === Decision: State management library ===
 
 Options:
-  A: Zustand
-  B: React Context
-  C: TanStack Query (server state)
+A: Zustand
+B: React Context
+C: TanStack Query (server state)
 
-| Criterion           | A | B | C | Weight |
+| Criterion | A | B | C | Weight |
 |---------------------|---|---|---|--------|
-| Performance         | 5 | 3 | 5 | M     |
-| Implementation complexity | 4 | 5 | 3 | H     |
-| Team familiarity    | 5 | 5 | 4 | M     |
-| Scalability         | 5 | 2 | 5 | M     |
+| Performance | 5 | 3 | 5 | M |
+| Implementation complexity | 4 | 5 | 3 | H |
+| Team familiarity | 5 | 5 | 4 | M |
+| Scalability | 5 | 2 | 5 | M |
 | Existing code consistency | 5 | 3 | 4 | H |
 
 Conclusion: Zustand
@@ -91,26 +97,26 @@ Use this to trace execution flow step-by-step in complex bugs.
 ```
 === Execution Flow Trace ===
 
-1. [Entry point]   {file:function} - {input value}
-2. [Call]          {file:function} - {passed value}
-3. [Processing]    {file:function} - {transformation/logic}
+1. [Entry point] {file:function} - {input value}
+2. [Call] {file:function} - {passed value}
+3. [Processing] {file:function} - {transformation/logic}
 4. [Failure point] {file:function} - {unexpected behavior here}
-   - Expected: {expected behavior}
-   - Actual: {actual behavior}
-   - Cause: {why different}
-5. [Result]        {error message or incorrect output}
+- Expected: {expected behavior}
+- Actual: {actual behavior}
+- Cause: {why different}
+5. [Result] {error message or incorrect output}
 ```
 
 **Example:**
 ```
-1. [Entry point]   pages/todos.tsx:TodoPage - user accesses /todos
-2. [Call]          hooks/useTodos.ts:useTodos - fetchTodos() called
-3. [Processing]    api/todos.ts:fetchTodos - GET /api/todos request
+1. [Entry point] pages/todos.tsx:TodoPage - user accesses /todos
+2. [Call] hooks/useTodos.ts:useTodos - fetchTodos() called
+3. [Processing] api/todos.ts:fetchTodos - GET /api/todos request
 4. [Failure point] hooks/useTodos.ts:23 - data returned as undefined
-   - Expected: data = [] (empty array)
-   - Actual: data = undefined (before fetch completes)
-   - Cause: useQuery initialData not set
-5. [Result]        undefined.map() in TodoList → TypeError
+- Expected: data = [] (empty array)
+- Actual: data = undefined (before fetch completes)
+- Cause: useQuery initialData not set
+5. [Result] undefined.map() in TodoList → TypeError
 ```
 
 ---
@@ -140,10 +146,10 @@ Systematically find bottlenecks for "it's slow" reports.
 === Performance Bottleneck Analysis ===
 
 Measurements:
-  - Total response time: {ms}
-  - DB query time: {ms} ({N} queries)
-  - Business logic: {ms}
-  - Serialization/rendering: {ms}
+- Total response time: {ms}
+- DB query time: {ms} ({N} queries)
+- Business logic: {ms}
+- Serialization/rendering: {ms}
 
 Bottleneck location: {step taking the most time}
 Cause: {N+1 query / heavy computation / large response / missing index / ...}
@@ -153,9 +159,38 @@ Expected improvement: {X}ms → {Y}ms
 
 ---
 
+## 6. Verification Gate (QA Agent, All Agents)
+
+Before claiming completion:
+
+```
+=== Verification Gate ===
+
+Claim: {what you're claiming}
+Command: {exact command to verify}
+Expected output: {what success looks like}
+Actual output: {run and paste result}
+
+✅ VERIFIED: {claim with evidence}
+OR
+❌ FAILED: {actual status with evidence}
+```
+
+**Common Verification Commands:**
+| Claim | Command |
+|-------|---------|
+| Tests pass | `npm test` |
+| Linter clean | `npm run lint` |
+| Build succeeds | `npm run build` |
+| TypeScript OK | `npx tsc --noEmit` |
+| Bug fixed | Run reproduction steps |
+
+---
+
 ## Usage Rules
 
 1. **When to use**: Required for Complex difficulty tasks, recommended for Medium
 2. **Where to record**: Record reasoning process in `progress-{agent-id}.md` in `.agent/tasks/`
 3. **If blanks cannot be filled**: Gather that information first (code reading, log checking, local search)
 4. **Unresolved after 3 iterations**: `Status: blocked` + include reasoning so far in result
+5. **Verification required**: Never claim success without running verification command

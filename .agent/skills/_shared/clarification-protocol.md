@@ -49,8 +49,8 @@
 ```
 🔍 불확실성 감지: {구체적 이슈}
 
-Option A: {접근법}  ✅ 장점 / ❌ 단점 / 💰 공수
-Option B: {접근법}  ✅ 장점 / ❌ 단점 / 💰 공수
+Option A: {접근법} ✅ 장점 / ❌ 단점 / 💰 공수
+Option B: {접근법} ✅ 장점 / ❌ 단점 / 💰 공수
 
 어떤 접근을 선호하시나요? (A/B)
 ```
@@ -66,6 +66,24 @@ Option B: {접근법}  ✅ 장점 / ❌ 단점 / 💰 공수
 
 Status: BLOCKED (명확화 대기)
 ```
+
+---
+
+## 검증 게이트 (Verification Gate)
+
+BEFORE claiming any status:
+
+1. **IDENTIFY**: What command proves this claim?
+2. **RUN**: Execute the FULL command (fresh, complete)
+3. **READ**: Full output, check exit code, count failures
+4. **VERIFY**: Does output confirm the claim?
+5. **ONLY THEN**: Make the claim
+
+**Red Flags (STOP immediately):**
+- Using "should", "probably", "seems to"
+- Expressing satisfaction before verification
+- About to commit/push without verification
+- Trusting agent success reports
 
 ---
 
@@ -99,11 +117,11 @@ Status: BLOCKED (명확화 대기)
 
 1. 핵심 목표: {한 문장으로 정의}
 2. 사용자 스토리: (최소 3개)
-   - "사용자로서, {행동}을 하여 {이점}을 얻고 싶다"
+- "사용자로서, {행동}을 하여 {이점}을 얻고 싶다"
 3. 기능 범위:
-   - Must-have: {목록}
-   - Nice-to-have: {목록}
-   - Out-of-scope: {목록}
+- Must-have: {목록}
+- Nice-to-have: {목록}
+- Out-of-scope: {목록}
 4. 기술 제약: {기존 코드 / 스택 / 호환성}
 5. 성공 기준: {측정 가능한 조건}
 ```
