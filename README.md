@@ -1,6 +1,8 @@
 # 🚀 Antigravity Setting
 
-AI 에이전트(Antigravity, Claude, Cursor 등)를 위한 공유 설정 레포.
+[![npm version](https://img.shields.io/npm/v/@gimso2x/antigravity-setting)](https://www.npmjs.com/package/@gimso2x/antigravity-setting)
+
+AI 에이전트(Antigravity, Claude, Cursor 등)를 위한 공유 설정 패키지.
 어떤 프로젝트든 동일한 `.agent/` 스킬 + 워크플로우 + 글로벌 규칙을 빠르게 적용할 수 있습니다.
 
 ---
@@ -13,7 +15,7 @@ AI 에이전트(Antigravity, Claude, Cursor 등)를 위한 공유 설정 레포.
 | **Workflows** | `.agent/workflows/` | `/debug`, `/plan`, `/review` |
 | **Global Rules** | `GEMINI.md` | Antigravity 글로벌 규칙 (검증 프로토콜 포함) |
 | **Cursor Global** | `CURSOR_GLOBAL_RULES.md` | Cursor Settings → Rules 붙여넣기용 |
-| **Cursor Rules** | `.cursor/rules/` | Cursor 워크플레이스 규칙 (.mdc) |
+| **Cursor Rules** | `.cursor/rules/` | Cursor 워크스페이스 규칙 (.mdc) |
 | **Init Prompt** | `templates/init-*.md` | 프로젝트 분석 → workspace GEMINI.md 생성 프롬프트 |
 
 ---
@@ -47,27 +49,35 @@ AI 에이전트(Antigravity, Claude, Cursor 등)를 위한 공유 설정 레포.
 
 ## ⚡ 설치 방법
 
-### 1. 레포 clone + 스크립트 실행
+### npx로 실행 (권장)
 
-```powershell
-# 1) 이 레포를 아무 곳에 clone (최초 1회)
-git clone https://github.com/gimso2x/antigravity_setting.git
+```bash
+# 인터랙티브 선택 (1/2/3 메뉴)
+npx @gimso2x/antigravity-setting
 
-# 2-A) Antigravity (기본)
-& C:\\path\\to\\antigravity_setting\\scripts\\setup.ps1 -TargetPath "C:\\your\\project"
+# Antigravity만 배포
+npx @gimso2x/antigravity-setting --antigravity
 
-# 2-B) Cursor IDE
-& C:\\path\\to\\antigravity_setting\\scripts\\setup.ps1 -TargetPath "C:\\your\\project" -WorkspaceAgent cursor
+# Cursor만 배포
+npx @gimso2x/antigravity-setting --cursor
+
+# 둘 다 배포
+npx @gimso2x/antigravity-setting --both
+
+# 특정 경로에 배포
+npx @gimso2x/antigravity-setting --both --target ./my-project
 ```
 
-스크립트가 수행하는 작업:
+CLI가 수행하는 작업:
 
 - ✅ `.agent/` → 타겟 프로젝트에 복사 (기존 있으면 덮어쓰기)
 - ✅ `GEMINI.md` → `~/.gemini/GEMINI.md` 글로벌 설정 (기존 백업)
+- ✅ `.cursor/rules/` → Cursor 워크스페이스 규칙 복사
+- ✅ `init.md` → 선택한 에이전트에 맞는 초기화 프롬프트 복사
 
-### 2. Workspace GEMINI.md 생성
+### Workspace GEMINI.md 생성
 
-`templates/init-antigravity.md`의 프롬프트를 LLM 에이전트에 붙여넣으면, 프로젝트를 분석하고 맞춤형 workspace `GEMINI.md`를 자동 생성합니다.
+배포 후 생성된 `init.md`를 LLM 에이전트에 붙여넣으면, 프로젝트를 분석하고 맞춤형 workspace `GEMINI.md`를 자동 생성합니다.
 
 ---
 
@@ -75,6 +85,8 @@ git clone https://github.com/gimso2x/antigravity_setting.git
 
 ```
 .
+├── bin/
+│   └── cli.mjs               # CLI 진입점 (npx 실행)
 ├── .agent/                    # Antigravity 전용
 │   ├── skills/
 │   │   ├── _shared/           # 공유 리소스 (clarification, reasoning)
@@ -96,13 +108,11 @@ git clone https://github.com/gimso2x/antigravity_setting.git
 │       ├── plan-workflow.mdc
 │       ├── review-workflow.mdc
 │       └── commit-rules.mdc
-├── scripts/
-│   ├── setup.ps1              # PowerShell 초기화
-│   └── setup.sh               # Bash 초기화
 ├── templates/
 │   ├── init-antigravity.md    # Antigravity용
 │   ├── init-cursor.md         # Cursor용
 │   └── init-both.md           # 둘 다
+├── package.json               # npm 패키지 설정
 ├── GEMINI.md                  # Antigravity 글로벌 규칙
 ├── CURSOR_GLOBAL_RULES.md     # Cursor 글로벌 규칙
 └── README.md                  # 이 파일
@@ -112,4 +122,8 @@ git clone https://github.com/gimso2x/antigravity_setting.git
 
 ## 🔄 업데이트
 
-설정을 업데이트하려면 이 레포에서 변경 후 `setup.ps1`을 다시 실행하면 됩니다.
+설정을 업데이트하려면 최신 버전을 다시 실행하면 됩니다:
+
+```bash
+npx @gimso2x/antigravity-setting@latest --both
+```

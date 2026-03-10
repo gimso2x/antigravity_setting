@@ -1,0 +1,35 @@
+{
+  "name": "@gimso2x/antigravity-setting",
+  "version": "1.0.0",
+  "description": "AI 에이전트(Antigravity, Cursor) 워크스페이스 설정 CLI",
+  "bin": {
+    "antigravity-setting": "./bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    ".agent/",
+    ".cursor/",
+    "templates/",
+    "GEMINI.md",
+    "CURSOR_GLOBAL_RULES.md"
+  ],
+  "keywords": [
+    "ai",
+    "agent",
+    "antigravity",
+    "cursor",
+    "workspace",
+    "setup",
+    "gemini"
+  ],
+  "author": "gimso2x",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gimso2x/antigravity_setting.git"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=16"
+  }
+}
